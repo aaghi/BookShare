@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Items Catalog</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/masterPage.xhtml">
+            <ui:define name="pageScripts">
+         
+                 <h:outputStylesheet library="css" name="demo_table_jui.css" />
+                 <h:outputStylesheet library="css" name="demo_page.css" />
+                 <h:outputStylesheet library="css" name="demo_page.css" />
+                
+          
+
+      
+                        <script type="text/javascript" charset="utf-8">
+            //<![CDATA[
+                $(document).ready(function() {
+                    var x = document.getElementById("userItemsForm:userItems");   // The table 
+
+                    if ( x && x.tBodies && x.tBodies.length>0 )
+                    {
+                        // This works for me, but you're match criteria may vary
+                        if ( x.tBodies[0].innerHTML.length==19 && x.tBodies[0].rows.length ==1  )
+                        {
+                            x.tBodies[0].deleteRow(0);
+                        }                     
+                    }
+                    oTable = jQuery("#userItemsForm\\:userItems").dataTable({
+                        "bJQueryUI": true,"bFilter": false
+                    });
+
+                        //$('#j_idt7\\3AuserItems').dataTable();
+                    });
+            //]]>
+        </script>                
+            </ui:define>
+           
+        <ui:define name="content">
+        <f:view>
+            
+            <h:form id="userItemsForm">
+                <h:outputLabel value="Item Name: "/><h:inputText value="#{itemSearchView.masterItem.name}"/>
+                <h:outputLabel value="User: "/><h:inputText value="#{itemSearchView.user.email}"/>
+                <h:outputLabel value="Location: "/><h:selectOneMenu id="selectCategory" value="#{itemSearchView.item.location}">
+                    <f:selectItems value="#{itemSearchView.allLocations}" />
+                </h:selectOneMenu> 
+                <h:commandButton action="#{itemSearchView.searchUserItems()}" value="Search">     
+                </h:commandButton>
+
+                <h:dataTable id="userItems" 
+                             columnClasses="list-column-left, list-column-left,
+                                            list-column-left, list-column-left,
+                                            list-column-left"
+                                            width="100%"
+                                            class="display"
+                         value="#{itemSearchView.searchResults}" var="userItem">   
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Item"/>
+                        </f:facet>
+                        <h:outputText value="#{userItem.masterItem.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Category"/>
+                        </f:facet>
+                        <h:outputText value="#{userItem.masterItem.category.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Location"/>
+                        </f:facet>
+                        <h:outputText value="#{userItem.location.name}"/>                            
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Owner"/>
+                        </f:facet>
+                        <h:outputText value="#{userItem.owner.name}, "/>
+                        <h:outputText value="#{userItem.owner.email}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:outputLink value="#" onclick="window.open('userItem.xhtml?userItemId=#{userItem.id}&amp;borrowerId=#{itemView.me.id}', '', 'location=no,status=no,resizable=no,width=400px,height=300');">
+                            <h:outputText value="Details" />
+                        </h:outputLink>
+                    </h:column>
+                </h:dataTable> 
+            </h:form>
+        </f:view>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

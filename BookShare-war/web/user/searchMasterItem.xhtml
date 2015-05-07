@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Add Item</title>
+    </h:head>
+    <h:body>
+       <ui:composition template="/masterPage.xhtml">
+    <ui:define name="pageScripts">
+         <script type="text/javascript">
+            function toggleNewItem(){
+                $("#addNewDiv").toggle(500);
+                $("#searchDiv").toggle(500);
+            }
+            function onevent(){
+                $('#resultSet').show();
+            }
+        </script>
+    </ui:define>
+           <ui:define name="content">
+        <f:view>
+
+        <h:form>
+           <div id="addNewDiv" style="display:none;">
+              <p>
+                Create a new item to add to your collection, or <a href="#" onclick="toggleNewItem()"> search for and existing item</a>
+            </p>
+               <table>
+                   <tr><td><h:outputLabel value="Item Name"/></td><td><h:inputText value="#{itemView.item.name}"/>  </td></tr>
+                   <tr><td> <h:outputLabel value="Item Type"/></td><td>            <h:selectOneMenu id="selectCategory" 
+             value="#{itemView.item.category}">
+              <f:selectItems 
+               value="#{itemView.selectCategories}" />
+            </h:selectOneMenu>  </td></tr>
+                   
+                   <tr><td><h:commandButton action="#{itemView.addItem}" value="Add Item"/></td></tr>
+               </table>
+                    
+            
+ 
+             
+            </div>
+            <div id="searchDiv">
+            <p>
+                Search for item to add to your collection, or <a href="#" onclick="toggleNewItem()"> add a new item</a>
+            </p>
+            <h:outputLabel value="Search Items:"/><h:inputText value="#{itemView.searchQuery}" autocomplete = "off">
+                <f:ajax event="keyup" render="books" onevent="onevent"/></h:inputText>
+            <div id="resultSet" style="display:none;">
+            <h:dataTable id="books" styleClass="myItemsTable" value="#{itemView.items}" var="item">   
+          <h:column>
+            <f:facet name="header">
+              <h:outputText  value="name"/>
+            </f:facet>
+             <h:outputText value="#{item.name}"/>
+          </h:column>
+          <h:column>
+                       <f:facet name="header">
+              <h:outputText  value="Category"/>
+            </f:facet>
+              <h:outputText value="#{item.categoryName}"/>                            
+           </h:column>
+                 <h:column>
+                     <h:commandButton action="#{itemView.addMasterItem}" value="Add Item">
+                         <f:param name="masterId" value="#{item.id}" />
+                     </h:commandButton>
+                 </h:column>
+                        
+        
+        </h:dataTable> 
+            </div>
+            </div>
+        </h:form>
+
+    </f:view>
+</ui:define>
+       </ui:composition>
+    </h:body>
+</html>
+

@@ -37,7 +37,12 @@ $RECYCLE.BIN/
 
 # Directories potentially created on remote AFP share
 .AppleDB
+build
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
+*.svn-base
+*.class
+*.netbeans-base
+BookShare-ejb/setup/glassfish-resources.xml

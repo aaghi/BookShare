@@ -1,0 +1,102 @@
+/* 
+    Document   : cow
+    Created on : Mar 30, 2012, 3:15:41 AM
+    Author     : macadada
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#content{
+    padding: 1em;
+    background-color: #FFF;
+    border-radius: 5px;
+}
+
+body{
+    background-color: #222E3E;
+}
+table.pretty {
+  margin: 1em 1em 1em 2em;
+  background: whitesmoke;
+  border-collapse: collapse;
+}
+table.pretty th, table.pretty td {
+  border: 1px gainsboro solid;
+  padding: 0.2em;
+}
+table.pretty th {
+  background: gainsboro;
+  text-align: left;
+}
+table.pretty caption {
+  margin-left: inherit;
+  margin-right: inherit;
+}
+
+#myItemsContainer{
+    background: whitesmoke;
+    margin-top: 1em;
+}
+
+.myItemsTable{
+  width:100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+.myItemsTable thead tr{
+  color:white;
+  background: #222E3E !important; 
+}
+.myItemsTable tr:nth-child(odd)
+{ background-color:#eee; }
+.myItemsTable tr:nth-child(even) 
+{ background-color:#fff; }
+
+#page-wrapper{
+   width:960px;
+   margin:0 auto;
+   text-align:left; 
+   border-radius: 4px;
+   
+}
+
+#header {
+    height: 80px;
+    background-color: #10161E;
+    color: white;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+
+
+ul#list-nav {
+list-style:none;
+margin:20px;
+padding:0;
+width:610px;
+}
+
+ul#list-nav li {
+display:inline
+}
+
+ul#list-nav li a {
+text-decoration:none;
+padding:5px 0;
+width:100px;
+background:#485e49;
+color:#eee;
+float:left;
+text-align:center;
+border-left:1px solid #fff;
+}
+
+ul#list-nav li a:hover {
+background:#a2b3a1;
+color:#000
+}

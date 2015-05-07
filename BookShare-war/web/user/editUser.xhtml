@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+    <h:head>
+        <title>Edit User Details</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/masterPage.xhtml">
+            <ui:define name="pageScripts">
+
+                <style type="text/css" title="currentStyle">
+                    @import "../resources/css/demo_page.css";
+                    @import "../resources/css/demo_table_jui.css";
+                    @import "../resources/jquery-ui-1.8.18.custom.css";
+
+            </style>
+            <script type="text/javascript" language="javascript" src="../resources/js/jquery.js"></script>
+            <script type="text/javascript" language="javascript" src="../resources/js/jquery.dataTables.js"></script>
+            <script type="text/javascript" charset="utf-8">
+                //<![CDATA[
+                    $(document).ready(function() {
+
+                        $('#loanRequestsForm\\3AloanItemRequests').dataTable({
+                            "bJQueryUI": true
+                        });
+
+                        $('#borrowRequestsForm\\3AborrowingItemRequests').dataTable({
+                            "bJQueryUI": true
+                        });
+                        //$('.dataTable').dataTable();
+                    });
+                //]]>
+            </script>
+        </ui:define>
+        <ui:define name="content">
+
+        <h:form>
+            <h:panelGrid columns="2" border="1">
+                  <h:outputLabel value="Name:"/>
+                   <h:inputText value="#{userView.user.name}"/>
+
+                    <h:outputLabel value="Email:"/>
+                    <h:outputLabel value="#{userView.user.email}"/>
+
+                    <h:outputLabel value="Phone Number:"/>
+                    <h:inputText value="#{userView.user.phoneNumber}"/>
+
+                    <h:outputLabel value="Address:"/>
+                    <h:inputText value="#{userView.user.address}"/>
+
+                    <h:outputLabel value="City:"/>
+                    <h:inputText value="#{userView.user.city}"/>
+
+                    <h:outputLabel value="Country:"/>
+                    <h:inputText value="#{userView.user.country}"/>
+           </h:panelGrid>
+           <h:panelGrid columns="2" border="1">
+                     <h:outputLabel value="Old Password:"/>
+                    <h:inputSecret value="#{userView.newPassword}"/>
+                    <h:outputLabel value="New Password:"/>
+                    <h:inputSecret value="#{userView.newPassword}"/>
+                    <h:outputLabel value="Confirm Password:"/>
+                    <h:inputSecret value="#{userView.confirmPassword}"/>
+           </h:panelGrid>
+           <h:commandButton action="#{userView.savePassword}" value="Change Password"/>
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

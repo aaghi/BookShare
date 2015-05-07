@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Item Details</title>
+        
+        <h:outputStylesheet library="css" name="jquery-ui.css" />
+        <h:outputStylesheet library="css" name="cow.css" />
+        <h:outputStylesheet library="css" name="jquery.gritter.css" />
+        <h:outputScript library="js" name="jquery.js" />
+        <h:outputScript library="js" name="jquery-ui.js" />
+        <h:outputScript library="js" name="jquery.gritter.min.js" />
+        <h:outputScript library="js" name="jquery.dataTables.js" />
+    </h:head>
+    <h:body >
+        <f:view>
+            <h:panelGrid columns="2" bgcolor="#FFFFFF">
+                <h:outputText value="Item: "/>
+                <h:outputText value="#{userItemView.userItem.masterItem.name}, #{userItemView.userItem.masterItem.category.name}"/>
+                <h:outputText value="Owner:"/>
+                <h:outputText value="#{userItemView.userItem.owner.name}: #{userItemView.userItem.owner.email}"/>
+                <h:outputText value="Status: "/>
+                <h:outputText value="#{userItemView.userItem.status.name}"/>
+                <h:outputText value="Location: "/>
+                <h:outputText value="#{userItemView.userItem.location.name}"/>
+            </h:panelGrid>
+            
+            -----------------------------------------
+            
+            <h:panelGrid rendered="#{userItemView.requestable}" columns="1">
+                <h:inputTextarea id="commentText" rows="4" cols="15" value="#{userItemView.request.comments}"/>
+                <h:form>
+                    <h:commandButton action="#{userItemView.requestToBorrowItem()}" value="Borrow"> 
+                        <f:param name="userItemId" value="#{userItemView.userItem.id}" />
+                        <f:param name="borrowerId" value="#{userItemView.borrower.id}" />
+                    </h:commandButton>
+                </h:form>
+            </h:panelGrid>
+            <h:panelGrid rendered="#{!userItemView.requestable}" columns="1">
+                <h:outputText value="Borrow request sent!"/>
+            </h:panelGrid>
+            
+        </f:view>
+    </h:body>
+</html>
+

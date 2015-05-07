@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/masterPage.xhtml">
+            <ui:define name="content">
+        Hello from Cows <h:outputLabel value="#{itemView.username}"/><h:outputLabel value="#{itemView.me.password}"/>
+        <f:view>
+        <h:form>
+            <h:outputLabel value="Message:"/><h:inputText value="#{itemView.item.name}"/>
+            <h:commandButton action="#{itemView.addItem}" value="Post Message"/>
+            <h:selectOneMenu id="selectCategory" 
+             value="#{itemView.item.category}">
+              <f:selectItems 
+               value="#{itemView.selectCategories}" />
+            </h:selectOneMenu> 
+            <h:commandButton id="submit" value="Submit">     
+            </h:commandButton>
+        </h:form>
+                    <h:dataTable id="books"
+         columnClasses="list-column-center,
+          list-column-right, list-column-center,
+        list-column-right" headerClass="list-header"
+         rowClasses="list-row" styleClass="list-background" value="#{itemView.items}" var="item">   
+          <h:column>
+            <f:facet name="header">
+              <h:outputText  value="#{item.id}"/>
+            </f:facet>
+             <h:outputText value="#{item.name}"/>
+          </h:column>
+          <h:column>
+              <h:outputText value="#{item.categoryName}"/>                            
+           </h:column>
+                        
+        
+        </h:dataTable> 
+            
+            
+           ---------------------------------------------------------
+           
+           <h:dataTable value="#{itemView.me.ownedItems}" var="item">   
+          <h:column>
+           
+              <h:outputText  value="#{item.id}"/>
+          
+              <h:outputText value="#{item.masterItem.name}"/>
+          </h:column>
+          <h:column>
+              <h:outputText value="#{item.location}"/>                            
+           </h:column>
+                        
+        
+        </h:dataTable> 
+    </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

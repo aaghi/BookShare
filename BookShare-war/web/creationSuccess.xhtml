@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>New User</title>
+    </h:head>
+    <h:body>
+           <ui:composition template="/masterPage.xhtml">
+                <ui:define name="pageScripts">
+
+                    <style type="text/css" title="currentStyle">
+                        @import "../resources/css/demo_page.css";
+                        @import "../resources/css/demo_table_jui.css";
+                        @import "../resources/jquery-ui-1.8.18.custom.css";
+
+                </style>
+                <script type="text/javascript" language="javascript" src="../resources/js/jquery.js"></script>
+                <script type="text/javascript" language="javascript" src="../resources/js/jquery.dataTables.js"></script>
+                <script type="text/javascript" charset="utf-8">
+                    //<![CDATA[
+                        $(document).ready(function() {
+
+                            $('#loanRequestsForm\\3AloanItemRequests').dataTable({
+                                "bJQueryUI": true
+                            });
+
+                            $('#borrowRequestsForm\\3AborrowingItemRequests').dataTable({
+                                "bJQueryUI": true
+                            });
+                            //$('.dataTable').dataTable();
+                        });
+                    //]]>
+                </script>
+                </ui:define>
+        <ui:define name="content">
+            <h:outputLabel value="User account #{newUserView.user.email} was successfully created"></h:outputLabel>
+        </ui:define>
+           </ui:composition>
+    </h:body>
+</html>
+

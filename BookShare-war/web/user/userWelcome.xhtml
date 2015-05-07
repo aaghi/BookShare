@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>#{userView.user.name} Wall</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/masterPage.xhtml">
+        <ui:define name="pageScripts">
+            
+            <style type="text/css" title="currentStyle">
+                @import "../resources/css/demo_page.css";
+                @import "../resources/css/demo_table_jui.css";
+                @import "../resources/jquery-ui-1.8.18.custom.css";
+                
+        </style>
+        
+        <script type="text/javascript" language="javascript" src="../resources/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            //<![CDATA[
+                $(document).ready(function() {
+                    var w = document.getElementById("borrowedItemsForm:borrowedItems");   // The table
+                    
+                    if ( w && w.tBodies && w.tBodies.length>0 ){
+                        if ( w.tBodies[0].innerHTML.length==19 && w.tBodies[0].rows.length ==1  ){
+                            w.tBodies[0].deleteRow(0);
+                        }                     
+                    }
+                    oTable = jQuery("#borrowedItemsForm\\:borrowedItems").dataTable({
+                        "bJQueryUI": true
+                    });
+                    
+                    var x = document.getElementById("loanRequestsForm:loanItemRequests");   // The table 
+                    if ( x && x.tBodies && x.tBodies.length>0 ){
+                        if ( x.tBodies[0].innerHTML.length==19 && x.tBodies[0].rows.length ==1  ){
+                            x.tBodies[0].deleteRow(0);
+                        }                     
+                    }
+                    oTable = jQuery("#loanRequestsForm\\:loanItemRequests").dataTable({
+                        "bJQueryUI": true
+                    });
+                    
+                    var y = document.getElementById("borrowRequestsForm:borrowingItemRequests");   // The table 
+                    if ( y && y.tBodies && y.tBodies.length>0 ){
+                        if ( y.tBodies[0].innerHTML.length==19 && y.tBodies[0].rows.length ==1  ){
+                            y.tBodies[0].deleteRow(0);
+                        }                     
+                    }
+                    oTable = jQuery("#borrowRequestsForm\\:borrowingItemRequests").dataTable({
+                        "bJQueryUI": true
+                    });
+                 });
+                 
+            //]]>
+        </script>
+          <script>
+  $(document).ready(function() {
+    $("#accordion").accordion({ autoHeight: false });
+  });
+  </script>
+        </ui:define>
+        <ui:define name="content">
+            <div id="accordion">
+                <h3><a href="#">Friends</a></h3>
+	<div>
+        <h:outputLabel value="#{userView.message}"/>
+        <br/>
+        <h:link value="Add Friend"  outcome="/faces/user/userSearch.xhtml"/>
+        <h:form id="friends">
+             <h:outputText value="Friends"/>
+            <h:dataTable styleClass="myItemsTable" id="Friends" title="Friends"
+            width="100%" value="#{userView.friendsList}" var="req">   
+                <h:column>
+                    <h:outputText  value="#{req.targetUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.targetUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Anti Friend" action="#{userView.makeAntiFriend(req.id)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" action="#{userView.deleteFriendship(req.id)}"/>
+                </h:column>
+            </h:dataTable>
+            <h:dataTable  styleClass="myItemsTable" id="Friends2"
+                width="100%" value="#{userView.friendsList2}" var="req">   
+                <h:column>
+                    <h:outputText  value="#{req.sourceUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.sourceUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Anti Friend" action="#{userView.makeAntiFriend(req.id)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" action="#{userView.deleteFriendship(req.id)}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form id="antifriends">
+             <h:outputText value="Anti Friends"/>
+            <h:dataTable id="Antifriends" styleClass="myItemsTable" title="Anti Friends"
+                value="#{userView.antiFriendsList}" var="req"
+                width="100%">   
+                <h:column>
+                    <h:outputText  value="#{req.targetUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.targetUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Friend" action="#{userView.makeFriend(req.id)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" action="#{userView.deleteFriendship(req.id)}"/>
+                </h:column>
+            </h:dataTable>
+             
+            <h:dataTable styleClass="myItemsTable" id="Antifriends2"
+                value="#{userView.antiFriendsList2}" var="req">   
+                <h:column>
+                    <h:outputText  value="#{req.sourceUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.sourceUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Friend" action="#{userView.makeFriend(req.id)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" action="#{userView.deleteFriendship(req.id)}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form id="friendRequestsForm">
+            <h:outputText value="Outgoing Friend Requests"/>
+            <h:dataTable id="requets" title ="Friend Requests"
+                width="100%" styleClass="myItemsTable"
+                value="#{userView.pendingRequests}" var="req">   
+                <h:column>
+                        <h:outputText  value="#{req.sourceUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.sourceUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.status}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete Request" action="#{userView.deleteFriendship(req.id)}"/>
+                </h:column>
+             </h:dataTable>            
+        </h:form>
+        
+        <h:form id="pendingRequestsForm">
+            <h:outputText value="Incoming Friend Requests"/>
+            <h:dataTable id="pendingRequests" title="Pending Requests"
+                         width="100%" styleClass="myItemsTable"
+                         value="#{userView.friendRequests}" var="req">   
+                <h:column>
+                        <h:outputText  value="#{req.sourceUser.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{req.sourceUser.email}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Accept" action="#{userView.makeFriend(req.id)}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Decline" action="#{userView.declineFrienship(req.id)}"/>
+                </h:column>
+             </h:dataTable>            
+        </h:form>
+           </div>
+                <h3><a href="#">Items</a></h3>
+	<div>
+            <h:form id="borrowedItemsForm">
+            <h:outputText value="My Borrowed Items"/>
+            <h:dataTable id="borrowedItems" title="borrowedItems" 
+                         width="100%"
+                         
+                         value="#{itemView.borrowedItemsForUser}" var="item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item"/>
+                    </f:facet>
+                    <h:outputText value="#{item.masterItem.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Category"/>
+                    </f:facet>
+                    <h:outputText value="#{item.masterItem.category.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location"/>
+                    </f:facet>
+                    <h:outputText value="#{item.location.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Status"/>
+                    </f:facet>
+                    <h:outputText value="#{item.status.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Owner"/>
+                    </f:facet>
+                    <h:outputText value="#{item.owner.name}, #{item.owner.email}"/>
+                </h:column>
+            </h:dataTable> 
+        </h:form>
+          <br>&nbsp;</br>
+        <h:form id="loanRequestsForm">
+            <h:outputText value="Loan Requests"/>
+            <h:dataTable id="loanItemRequests" title="loaning Requests" 
+                         width="100%"
+                         
+                         value="#{userView.borrowItemRequests}" var="req">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.masterItem.name}, #{req.item.masterItem.category.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Requester"/>
+                    </f:facet>
+                    <h:outputText value="#{req.borrower.name}: #{req.borrower.email}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Status"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.status.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.location.name}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Accept" action="#{userView.acceptBorrowRequest(req.item.id, req.borrower.id)}"/>
+                    <h:commandButton value="Decline" action="#{userView.refuseBorrowRequest(req.item.id, req.borrower.id)}"/>
+                </h:column>
+            </h:dataTable> 
+        </h:form>
+        <br>&nbsp;</br>
+        <h:form id="borrowRequestsForm">
+            <h:outputText value="Pending Borrow Requests"/>
+            <h:dataTable id="borrowingItemRequests" title="Borrowing Requests"  
+                         width="100%"
+                         
+                         value="#{userView.pendingItemRequests}" var="req">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.masterItem.name}, #{req.item.masterItem.category.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Owner"/>
+                    </f:facet>
+                    <h:outputText value="#{req.borrower.name}: #{req.borrower.email}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Status"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.status.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location"/>
+                    </f:facet>
+                    <h:outputText value="#{req.item.location.name}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Cancel" action="#{userView.cancelBorrowRequest(req.item.id, req.borrower.id)}"/>
+                </h:column>
+            </h:dataTable> 
+        </h:form>
+            </div>
+            </div>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Add a location!</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/masterPage.xhtml">
+            <ui:define name="pageScripts">
+                <h:outputStylesheet library="css" name="demo_table_jui.css" />
+                 <h:outputStylesheet library="css" name="demo_page.css" />
+                 <h:outputStylesheet library="css" name="demo_page.css" />
+                
+          
+
+      
+                        <script type="text/javascript" charset="utf-8">
+            //<![CDATA[
+                $(document).ready(function() {
+                    var x = document.getElementById("locationForm:locations");   // The table 
+
+                    if ( x && x.tBodies && x.tBodies.length>0 )
+                    {
+                        // This works for me, but you're match criteria may vary
+                        if ( x.tBodies[0].innerHTML.length==19 && x.tBodies[0].rows.length ==1  )
+                        {
+                            x.tBodies[0].deleteRow(0);
+                        }                     
+                    }
+                    oTable = jQuery("#locationForm\\:locations").dataTable({
+                        "bJQueryUI": true
+                    });
+
+                        //$('#j_idt7\\3AuserItems').dataTable();
+                    });
+            //]]>
+        </script>                     
+            </ui:define>
+        <ui:define name="content">
+        <f:view>
+        <h:form id="locationForm">
+            <h:outputLabel value="Location: "/><h:inputText value="#{locationView.location.name}"/>
+            <h:commandButton action="#{locationView.addLocation()}" value="Add"/>
+        
+            <h:dataTable id="locations" value="#{locationView.allLocations}" var="loc" width="100%">   
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText  value="#{loc.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name"/>
+                    </f:facet>
+                    <h:outputText value="#{loc.name}"/>                            
+                </h:column>
+            </h:dataTable> 
+        </h:form>
+    </f:view>
+    </ui:define>
+    </ui:composition>        
+    </h:body>
+</html>
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+ 
+    <h:head>
+        <h:outputStylesheet library="css" name="jquery-ui.css" />
+        <h:outputStylesheet library="css" name="cow.css" />
+        <h:outputStylesheet library="css" name="jquery.gritter.css" />
+        <h:outputScript library="js" name="jquery.js" />
+        <h:outputScript library="js" name="jquery-ui.js" />
+        <h:outputScript library="js" name="jquery.gritter.min.js" />
+         <h:outputScript library="js" name="jquery.dataTables.js" />
+        
+        <ui:insert name="pageScripts" >
+	 		
+	</ui:insert>
+    </h:head>
+ 
+    <h:body>
+
+	<div id="page-wrapper">
+ 
+	    <div id="header">
+                <div style="float: left;"> <h1> Social Library </h1></div>
+		                 
+                    <div style="float: right; ">
+                        <ui:insert name="header" >
+                            <c:if test="${request.remoteUser == null}" >
+                            <form action="j_security_check" METHOD="POST">
+                                Username: <INPUT TYPE="text" NAME="j_username" VALUE=""/> 
+                                Password: <INPUT TYPE="password" NAME="j_password" VALUE=""/> 
+                            <INPUT TYPE="submit" value="Login"/>
+                            </form>
+                                <br/>
+                                <h:link value="Sign up" outcome="/faces/newUser.xhtml"/>
+                            </c:if>
+                            <c:if test="${request.remoteUser != null}" >
+                                
+                        <ul id="list-nav">
+                        <li><a href="/BookShare-war/faces/user/userWelcome.xhtml">Home</a></li>
+                        <li><a href="/BookShare-war/faces/user/result.xhtml">My Items</a></li>
+                        <li><a href="/BookShare-war/faces/user/searchItem.xhtml">Search</a></li>
+                        <li><a href="/BookShare-war/faces/user/addLocation.xhtml">Locations</a></li>
+                        <li><a href="/BookShare-war/faces/user/editUser.xhtml">My Account</a></li>
+                        <li><h:form><h:commandLink value="Logout" action="#{userView.logout()}"></h:commandLink></h:form></li>
+                        </ul>
+                            </c:if>
+                    </ui:insert>
+                    </div>
+		
+	    </div>
+ 
+	    <div id="content">
+	  	<ui:insert name="content" >
+	 		im the content
+	   	</ui:insert>
+	    </div>
+ 
+	    <div id="footer">
+	    	<ui:insert name="footer" >
+	    		im the footer
+	    	</ui:insert>
+    	    </div>
+ 
+        </div>
+ 
+    </h:body>
+</html>

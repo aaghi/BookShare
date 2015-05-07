@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Add Item</title>
+    </h:head>
+    <h:body>
+       <ui:composition template="/masterPage.xhtml">
+    <ui:define name="pageScripts">
+         <script type="text/javascript">
+            function onevent(){
+                $('#resultSet').show();
+            }
+        </script>
+    </ui:define>
+           <ui:define name="content">
+        <f:view>
+
+        <h:form>
+            <div id="searchDiv">
+                <h:outputLabel value="Search Users:"/><h:inputText value="#{userSearchView.searchName}" autocomplete = "off">
+                <f:ajax event="keyup" render="users" onevent="onevent" /></h:inputText>
+            <div id="resultSet" style="display:none;">
+                <h:dataTable id="users" styleClass="myItemsTable" value="#{userSearchView.searchResults}" var="u">   
+          <h:column>
+            <f:facet name="header">
+              <h:outputText  value="name"/>
+            </f:facet>
+             <h:outputText value="#{u.name}"/>
+          </h:column>
+          <h:column>
+                       <f:facet name="header">
+              <h:outputText  value="Email"/>
+            </f:facet>
+              <h:outputText value="#{u.email}"/>                            
+           </h:column>
+                 <h:column>
+                     <h:commandButton action="#{userView.sendFriendRequest(u.id)}" value="Send Friend Request">
+                     </h:commandButton>
+                 </h:column>
+                        
+        
+        </h:dataTable> 
+            </div>
+            </div>
+        </h:form>
+
+    </f:view>
+</ui:define>
+       </ui:composition>
+    </h:body>
+</html>
+

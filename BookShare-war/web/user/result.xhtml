@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        
+    </h:head>
+   <h:body>
+<ui:composition template="/masterPage.xhtml">
+    <ui:define name="pageScripts">
+        <script type="text/javascript">
+            var savingPopup;
+            function onevent(e) { 
+                if(e.status == 'success') {
+                    $.gritter.remove(savingPopup);
+
+                    $.gritter.add({
+                        title: 'Success',
+                        text: 'The item has been updated.'
+                    });
+                } else if(e.status == 'begin') { 
+                    savingPopup=$.gritter.add({
+                        title: 'Saving...',
+                        text: ' '
+                    });
+                }
+            }
+            
+            function onDelete(e) { 
+                if(e.status == 'begin') { 
+                    savingPopup=$.gritter.add({
+                        title: 'Deleting Item...',
+                        text: ' '
+                    });
+                }
+            }
+        </script>
+    </ui:define>
+    
+    <ui:define name="content">
+    <f:view>
+           
+        <h:form>
+            <div style="float:left;">You can manage your items in the table below:</div>
+            <div style="float:right;"><h:commandButton action="#{itemView.goToAddItem}" value="Add New Item"/></div>
+            <br/>
+            <div id="myItemsContainer">
+            <h:dataTable styleClass="myItemsTable" id="itemList" value="#{itemView.me.ownedItems}" var="item">   
+          <h:column>
+           <f:facet name="header">
+            <h:outputText value="Item Name"/>
+            </f:facet> 
+              
+          
+              <h:outputText value="#{item.masterItem.name}"/>
+          </h:column>
+          <h:column><f:facet name="header">
+            <h:outputText value="Location"/>
+            </f:facet> 
+                   <h:selectOneMenu id="selectLocation" 
+                                    value="#{item.location}">
+                    <f:selectItems  value="#{itemView.selectLocations}" />
+                    <f:ajax event="change" execute="@form" render="@form" listener="#{itemView.updateItemSelect}" onevent="onevent" />
+                </h:selectOneMenu>                         
+           </h:column>
+           <h:column>
+               <f:facet name="header">
+                <h:outputText value="Visibility"/>
+                </f:facet> 
+                   <h:selectOneMenu id="selectVisibility" 
+                                    value="#{item.visibility}">
+                    <f:selectItems  value="#{itemView.selectVisibility}" />
+                    <f:ajax event="change" execute="@form" render="@form" listener="#{itemView.updateItemSelect}"  onevent="onevent"/>
+                </h:selectOneMenu>                         
+           </h:column>
+                       <h:column>
+                           <f:facet name="header">
+                            <h:outputText value="Status"/>
+                            </f:facet> 
+                <h:selectOneMenu id="selectStatus" 
+                                 value="#{item.status}">
+                    <f:selectItems  value="#{itemView.selectStatus}" />
+                    <f:ajax event="change" execute="@form" render="@form" listener="#{itemView.updateItemSelect}"  onevent="onevent"/>
+                </h:selectOneMenu> 
+                       </h:column>
+                       <h:column>
+                           <f:facet name="header">
+                            <h:outputText value="Delete"/>
+                            </f:facet> 
+                           <h:commandButton  value="Delete Item"  rendered="#{item.status.name!='Borrowed'}">
+                               <f:param name="rezId" value="#{item.id}" />
+                               <f:ajax event="click" execute="@form" render="@form" listener="#{itemView.delItem}" onevent="onDelete"/>
+                           </h:commandButton>
+                       </h:column>
+                       
+                        
+        
+        </h:dataTable> 
+            </div>
+            
+            </h:form>
+    </f:view>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+
